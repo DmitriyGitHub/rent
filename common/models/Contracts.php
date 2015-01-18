@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "contracts".
@@ -101,5 +102,15 @@ class Contracts extends \yii\db\ActiveRecord
     public function getOrganisation()
     {
         return $this->hasOne(Organisations::className(), ['id' => 'organisation_id']);
+    }
+    
+    /**
+    * @inheritdoc
+    */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
     }
 }

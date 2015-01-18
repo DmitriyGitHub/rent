@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "accruals".
@@ -35,7 +36,7 @@ class Accruals extends \yii\db\ActiveRecord
     {
         return [
             [['date'], 'safe'],
-            [['amount', 'created_at', 'updated_at'], 'required'],
+            [['amount'], 'required'],
             [['amount'], 'number'],
             [['contract_id', 'service_id', 'created_at', 'updated_at'], 'integer']
         ];
@@ -71,5 +72,15 @@ class Accruals extends \yii\db\ActiveRecord
     public function getService()
     {
         return $this->hasOne(ServicesType::className(), ['id' => 'service_id']);
+    }
+    
+    /**
+    * @inheritdoc
+    */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
     }
 }

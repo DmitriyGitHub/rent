@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "payments".
@@ -38,7 +39,7 @@ class Payments extends \yii\db\ActiveRecord
     {
         return [
             [['date'], 'safe'],
-            [['amount', 'created_at', 'updated_at'], 'required'],
+            [['amount'], 'required'],
             [['amount'], 'number'],
             [['contract_id', 'type_id', 'service_id', 'created_at', 'updated_at'], 'integer'],
             [['number'], 'string', 'max' => 255]
@@ -85,5 +86,15 @@ class Payments extends \yii\db\ActiveRecord
     public function getType()
     {
         return $this->hasOne(PaymentsType::className(), ['id' => 'type_id']);
+    }
+    
+    /**
+    * @inheritdoc
+    */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
     }
 }
