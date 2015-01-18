@@ -23,19 +23,17 @@ class m150117_191950_add_contract_table extends Migration
         'organisation_id' => Schema::TYPE_INTEGER,
         
         'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 10',
-        'contract_type' => Schema::TYPE_INTEGER,
+        'type_id' => Schema::TYPE_INTEGER,
         'square' => Schema::TYPE_DECIMAL . '(15,4)',
         'descriptions' => Schema::TYPE_STRING,
         'initial_price' => Schema::TYPE_DECIMAL . '(15,2)',
         'account_number' => Schema::TYPE_STRING,
-        'object_part_id' => Schema::TYPE_INTEGER,
-        'object_part_additional' => Schema::TYPE_STRING,
         
-        'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-        'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+        'created_at' => Schema::TYPE_INTEGER,
+        'updated_at' => Schema::TYPE_INTEGER,
     ], $tableOptions);
     
-    $this->addForeignKey('FK_contracts_contract_type', 'contracts', 'contract_type', 'contracts_type', 'id', 'CASCADE', 'NO ACTION');
+    $this->addForeignKey('FK_contracts_contract_type', 'contracts', 'type_id', 'contracts_type', 'id', 'CASCADE', 'NO ACTION');
     $this->addForeignKey('FK_contracts_organisation', 'contracts', 'organisation_id', 'organisations', 'id', 'CASCADE', 'NO ACTION');
     $this->addForeignKey('FK_contracts_object', 'contracts', 'object_id', 'objects', 'id', 'CASCADE', 'NO ACTION');
 

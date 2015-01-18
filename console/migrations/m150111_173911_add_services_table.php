@@ -19,8 +19,8 @@ class m150111_173911_add_services_table extends Migration
       'description' => Schema::TYPE_STRING . ' NOT NULL COMMENT \'Service description\'',
 
       'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 10',
-      'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-      'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+      'created_at' => Schema::TYPE_INTEGER,
+      'updated_at' => Schema::TYPE_INTEGER,
     ], $tableOptions);
   }
 

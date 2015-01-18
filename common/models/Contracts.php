@@ -16,19 +16,19 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $object_id
  * @property integer $organisation_id
  * @property integer $status
- * @property integer $contract_type
+ * @property integer $type_id
  * @property string $square
  * @property string $descriptions
  * @property string $initial_price
  * @property string $account_number
- * @property integer $object_part_id
- * @property string $object_part_additional
  * @property integer $created_at
  * @property integer $updated_at
  *
+ * @property Accruals[] $accruals
  * @property Objects $object
- * @property ContractsType $contractType
+ * @property ContractsType $type
  * @property Organisations $organisation
+ * @property Payments[] $payments
  */
 class Contracts extends \yii\db\ActiveRecord
 {
@@ -46,11 +46,11 @@ class Contracts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['number', 'created_at', 'updated_at'], 'required'],
+            [['number'], 'required'],
             [['date', 'start_date', 'end_date'], 'safe'],
-            [['object_id', 'organisation_id', 'status', 'contract_type', 'object_part_id', 'created_at', 'updated_at'], 'integer'],
+            [['object_id', 'organisation_id', 'status', 'type_id', 'created_at', 'updated_at'], 'integer'],
             [['square', 'initial_price'], 'number'],
-            [['number', 'descriptions', 'account_number', 'object_part_additional'], 'string', 'max' => 255]
+            [['number', 'descriptions', 'account_number'], 'string', 'max' => 255]
         ];
     }
 
@@ -68,16 +68,22 @@ class Contracts extends \yii\db\ActiveRecord
             'object_id' => Yii::t('app', 'Object ID'),
             'organisation_id' => Yii::t('app', 'Organisation ID'),
             'status' => Yii::t('app', 'Status'),
-            'contract_type' => Yii::t('app', 'Contract Type'),
+            'type_id' => Yii::t('app', 'Type ID'),
             'square' => Yii::t('app', 'Square'),
             'descriptions' => Yii::t('app', 'Descriptions'),
             'initial_price' => Yii::t('app', 'Initial Price'),
             'account_number' => Yii::t('app', 'Account Number'),
-            'object_part_id' => Yii::t('app', 'Object Part ID'),
-            'object_part_additional' => Yii::t('app', 'Object Part Additional'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccruals()
+    {
+        return $this->hasMany(Accruals::className(), ['contract_id' => 'id']);
     }
 
     /**
@@ -91,9 +97,9 @@ class Contracts extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getContractType()
+    public function getType()
     {
-        return $this->hasOne(ContractsType::className(), ['id' => 'contract_type']);
+        return $this->hasOne(ContractsType::className(), ['id' => 'type_id']);
     }
 
     /**
@@ -102,6 +108,14 @@ class Contracts extends \yii\db\ActiveRecord
     public function getOrganisation()
     {
         return $this->hasOne(Organisations::className(), ['id' => 'organisation_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPayments()
+    {
+        return $this->hasMany(Payments::className(), ['contract_id' => 'id']);
     }
     
     /**

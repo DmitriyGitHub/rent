@@ -14,6 +14,8 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ *
+ * @property Districts[] $districts
  */
 class Areas extends \yii\db\ActiveRecord
 {
@@ -52,13 +54,21 @@ class Areas extends \yii\db\ActiveRecord
         ];
     }
 
-  /**
-   * @inheritdoc
-   */
-  public function behaviors()
-  {
-    return [
-      TimestampBehavior::className(),
-    ];
-  }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDistricts()
+    {
+        return $this->hasMany(Districts::className(), ['area' => 'id']);
+    }
+    
+    /**
+    * @inheritdoc
+    */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
 }

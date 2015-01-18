@@ -54,21 +54,21 @@ class ObjectParts extends \yii\db\ActiveRecord
         ];
     }
 
-  /**
-   * @inheritdoc
-   */
-  public function behaviors()
-  {
-    return [
-      TimestampBehavior::className(),
-    ];
-  }
-
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getObjects()
     {
-        return $this->hasMany(Objects::className(), ['part_type' => 'id']);
+        return $this->hasMany(Objects::className(), ['part_type_id' => 'id']);
+    }
+    
+    /**
+    * @inheritdoc
+    */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
     }
 }

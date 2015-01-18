@@ -20,6 +20,8 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ *
+ * @property Contracts[] $contracts
  */
 class Organisations extends \yii\db\ActiveRecord
 {
@@ -64,13 +66,21 @@ class Organisations extends \yii\db\ActiveRecord
         ];
     }
 
-  /**
-   * @inheritdoc
-   */
-  public function behaviors()
-  {
-    return [
-      TimestampBehavior::className(),
-    ];
-  }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getContracts()
+    {
+        return $this->hasMany(Contracts::className(), ['organisation_id' => 'id']);
+    }
+    
+    /**
+    * @inheritdoc
+    */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
 }

@@ -19,8 +19,8 @@ class m150111_174753_add_streets_tables extends Migration
       'full_name' => Schema::TYPE_STRING . ' NOT NULL COMMENT \'Street type full name\'',
 
       'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 10',
-      'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-      'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+      'created_at' => Schema::TYPE_INTEGER,
+      'updated_at' => Schema::TYPE_INTEGER,
     ], $tableOptions);
 
 
@@ -31,8 +31,8 @@ class m150111_174753_add_streets_tables extends Migration
       'street_type' => Schema::TYPE_INTEGER . ' NOT NULL COMMENT \'Street type ID\'',
 
       'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 10',
-      'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-      'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+      'created_at' => Schema::TYPE_INTEGER,
+      'updated_at' => Schema::TYPE_INTEGER,
     ], $tableOptions);
 
     $this->addForeignKey('FK_street_type', 'streets', 'street_type', 'streets_types', 'id', 'CASCADE', 'NO ACTION');

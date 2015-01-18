@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "sectors".
@@ -15,6 +16,7 @@ use Yii;
  * @property integer $created_at
  * @property integer $updated_at
  *
+ * @property Houses[] $houses
  * @property Districts $sectorDistrict
  */
 class Sectors extends \yii\db\ActiveRecord
@@ -33,8 +35,8 @@ class Sectors extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description', 'sector_district'], 'required'],
-            [['sector_district', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'district_id'], 'required'],
+            [['district_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['name', 'description'], 'string', 'max' => 255]
         ];
     }
@@ -48,28 +50,36 @@ class Sectors extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Sector name'),
             'description' => Yii::t('app', 'Sector description'),
-            'sector_district' => Yii::t('app', 'Sector district'),
+            'district_id' => Yii::t('app', 'Sector district ID'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
     }
 
-  /**
-   * @inheritdoc
-   */
-  public function behaviors()
-  {
-    return [
-      TimestampBehavior::className(),
-    ];
-  }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHouses()
+    {
+        return $this->hasMany(Houses::className(), ['sector' => 'id']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSectorDistrict()
+    public function getDistrict()
     {
-        return $this->hasOne(Districts::className(), ['id' => 'sector_district']);
+        return $this->hasOne(Districts::className(), ['id' => 'district_id']);
+    }
+    
+    /**
+    * @inheritdoc
+    */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
     }
 }

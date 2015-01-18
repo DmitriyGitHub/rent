@@ -20,26 +20,25 @@ class m150111_181611_add_objects_table extends Migration
       'description' => Schema::TYPE_STRING . ' COMMENT \'Object part description\'',
 
       'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 10',
-      'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-      'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+      'created_at' => Schema::TYPE_INTEGER,
+      'updated_at' => Schema::TYPE_INTEGER,
     ], $tableOptions);
 
     $this->createTable('{{%objects}}', [
       'id' => Schema::TYPE_PK,
-      'name' => Schema::TYPE_STRING . ' NOT NULL COMMENT \'Object name\'',
 
-      'address' => Schema::TYPE_INTEGER . ' NOT NULL COMMENT \'Object address\'',
-      'part_type' => Schema::TYPE_INTEGER . ' NOT NULL COMMENT \'Object part type ID\'',
+      'house_id' => Schema::TYPE_INTEGER . ' NOT NULL COMMENT \'Object house ID\'',
+      'part_type_id' => Schema::TYPE_INTEGER . ' NOT NULL COMMENT \'Object part type ID\'',
       'part_description' => Schema::TYPE_STRING . ' COMMENT \'Object part description\'',
 
 
       'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 10',
-      'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-      'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+      'created_at' => Schema::TYPE_INTEGER,
+      'updated_at' => Schema::TYPE_INTEGER,
     ], $tableOptions);
 
-    $this->addForeignKey('FK_object_address', 'objects', 'address', 'houses', 'id', 'CASCADE', 'NO ACTION');
-    $this->addForeignKey('FK_object_part_type', 'objects', 'part_type', 'object_parts', 'id', 'CASCADE', 'NO ACTION');
+    $this->addForeignKey('FK_object_address', 'objects', 'house_id', 'houses', 'id', 'CASCADE', 'NO ACTION');
+    $this->addForeignKey('FK_object_part_type', 'objects', 'part_type_id', 'object_parts', 'id', 'CASCADE', 'NO ACTION');
   }
 
   public function down()

@@ -15,6 +15,8 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ *
+ * @property Contracts[] $contracts
  */
 class ContractsType extends \yii\db\ActiveRecord
 {
@@ -32,7 +34,7 @@ class ContractsType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description', 'code', 'created_at', 'updated_at'], 'required'],
+            [['name', 'description', 'code'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['name', 'description', 'code'], 'string', 'max' => 255]
         ];
@@ -54,13 +56,21 @@ class ContractsType extends \yii\db\ActiveRecord
         ];
     }
 
-  /**
-   * @inheritdoc
-   */
-  public function behaviors()
-  {
-    return [
-      TimestampBehavior::className(),
-    ];
-  }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getContracts()
+    {
+        return $this->hasMany(Contracts::className(), ['contract_type' => 'id']);
+    }
+    
+    /**
+    * @inheritdoc
+    */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
 }

@@ -26,8 +26,8 @@ class m150111_182647_add_organisations_table extends Migration
       'self_org' => Schema::TYPE_BOOLEAN . ' COMMENT \'Self organisation\'',
 
       'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 10',
-      'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-      'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+      'created_at' => Schema::TYPE_INTEGER,
+      'updated_at' => Schema::TYPE_INTEGER,
     ], $tableOptions);
 
   }

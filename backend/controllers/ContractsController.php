@@ -4,10 +4,11 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Contracts;
-use common\models\ContractsSearch;
+use backend\models\ContractsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * ContractsController implements the CRUD actions for Contracts model.
@@ -17,6 +18,18 @@ class ContractsController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => TRUE,
+                        'matchCallback' => '\common\models\User::hasBackendAccess'
+                    ],
+                    [
+                        'allow' => FALSE,
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

@@ -8,10 +8,11 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
- * User model
+ * This is the model class for table "user".
  *
  * @property integer $id
  * @property string $username
+ * @property string $auth_key
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
@@ -25,6 +26,10 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+    
+    const ROLE_USER = 10;
+    const ROLE_ADMIN = 1;
+    const ROLE_RENT_MANAGER = 2;
 
     /**
      * @inheritdoc
@@ -37,25 +42,22 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
+            [['username', 'auth_key', 'password_hash', 'email'], 'required'],
+            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32],
+            
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['role', 'default', 'value' => self::ROLE_USER],
+            ['role', 'in', 'range' => [self::ROLE_ADMIN, self::ROLE_USER]],
         ];
     }
-
-    /**
+    
+        /**
      * @inheritdoc
      */
     public static function findIdentity($id)
@@ -184,5 +186,91 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'username' => Yii::t('app', 'Username'),
+            'auth_key' => Yii::t('app', 'Auth Key'),
+            'password_hash' => Yii::t('app', 'Password Hash'),
+            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
+            'email' => Yii::t('app', 'Email'),
+            'status' => Yii::t('app', 'Status'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+        ];
+    }
+    
+    /**
+    * @inheritdoc
+    */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+    
+    public static function getBackendRoles(){
+        return [
+            self::ROLE_ADMIN,
+            self::ROLE_RENT_MANAGER,
+        ];
+    }
+    
+    public static function getAdminRoles(){
+        return [
+            self::ROLE_ADMIN,
+        ];
+    }
+    
+    public static function getRolesList(){
+        return [
+            self::ROLE_ADMIN => Yii::t('app', 'Administrator'),
+            self::ROLE_RENT_MANAGER => Yii::t('app', 'Rent Manager'),
+            self::ROLE_USER => Yii::t('app', 'User'),
+        ];
+    }
+    
+    public function getRoleName(){
+        if(!empty($this->rolesList[$this->role])){
+            return $this->rolesList[$this->role];
+        }
+        return "";
+    }
+    
+    public static function getStatusesList(){
+        return [
+            self::STATUS_ACTIVE => Yii::t('app', 'Active'),
+            self::STATUS_DELETED => Yii::t('app', 'Deleted'),
+        ];
+    }
+    
+    public function getStatusName(){
+        if(!empty($this->statusesList[$this->status])){
+            return $this->statusesList[$this->status];
+        }
+        return "";
+    }
+    
+    public static function hasBackendAccess(){
+        if(Yii::$app->user->isGuest){
+            return FALSE;
+        }
+        $user = self::findOne([Yii::$app->user->id]);
+        return in_array($user->role, $user->backendRoles);
+    }
+
+    public static function isAdmin(){
+        if(Yii::$app->user->isGuest){
+            return FALSE;
+        }
+        $user = self::findOne([Yii::$app->user->id]);
+        return in_array($user->role, $user->adminRoles);
     }
 }

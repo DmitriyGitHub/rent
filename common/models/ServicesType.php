@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "services_type".
@@ -13,6 +14,9 @@ use Yii;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ *
+ * @property Accruals[] $accruals
+ * @property Payments[] $payments
  */
 class ServicesType extends \yii\db\ActiveRecord
 {
@@ -51,14 +55,29 @@ class ServicesType extends \yii\db\ActiveRecord
         ];
     }
 
-  /**
-   * @inheritdoc
-   */
-  public function behaviors()
-  {
-    return [
-      TimestampBehavior::className(),
-    ];
-  }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccruals()
+    {
+        return $this->hasMany(Accruals::className(), ['service_id' => 'id']);
+    }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPayments()
+    {
+        return $this->hasMany(Payments::className(), ['service_id' => 'id']);
+    }
+    
+    /**
+    * @inheritdoc
+    */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
 }

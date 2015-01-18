@@ -55,16 +55,6 @@ class Streets extends \yii\db\ActiveRecord
         ];
     }
 
-  /**
-   * @inheritdoc
-   */
-  public function behaviors()
-  {
-    return [
-      TimestampBehavior::className(),
-    ];
-  }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -79,5 +69,15 @@ class Streets extends \yii\db\ActiveRecord
     public function getStreetType()
     {
         return $this->hasOne(StreetsTypes::className(), ['id' => 'street_type']);
+    }
+    
+    /**
+    * @inheritdoc
+    */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
     }
 }

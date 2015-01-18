@@ -20,8 +20,8 @@ class m150118_125221_add_accruals_table extends Migration
         'contract_id' => Schema::TYPE_INTEGER,
         'service_id' => Schema::TYPE_INTEGER,
         
-        'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-        'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+        'created_at' => Schema::TYPE_INTEGER,
+        'updated_at' => Schema::TYPE_INTEGER,
     ], $tableOptions);
     
     $this->addForeignKey('FK_accrual_service', 'accruals', 'service_id', 'services_type', 'id', 'CASCADE', 'NO ACTION');

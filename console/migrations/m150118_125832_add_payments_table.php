@@ -22,8 +22,8 @@ class m150118_125832_add_payments_table extends Migration
         'type_id' => Schema::TYPE_INTEGER,
         'service_id' => Schema::TYPE_INTEGER,
         
-        'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-        'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+        'created_at' => Schema::TYPE_INTEGER,
+        'updated_at' => Schema::TYPE_INTEGER,
     ], $tableOptions);
     
     $this->addForeignKey('FK_payment_type', 'payments', 'type_id', 'payments_type', 'id', 'CASCADE', 'NO ACTION');

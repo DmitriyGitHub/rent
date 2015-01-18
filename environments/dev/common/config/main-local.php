@@ -42,6 +42,10 @@ if (!YII_ENV_TEST) {
             'model'   => [
                 'class'     => 'yii\gii\generators\model\Generator',
                 'templates' => ['mymodel' => '@common/my-gii/model']
+            ],
+            'crud'   => [
+                'class'     => 'yii\gii\generators\crud\Generator',
+                'templates' => ['mycrud-backend' => '@common/my-gii/crud']
             ]
         ],
     ];

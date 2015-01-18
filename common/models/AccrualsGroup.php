@@ -31,7 +31,7 @@ class AccrualsGroup extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description', 'created_at', 'updated_at'], 'required'],
+            [['name', 'description'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['name', 'description'], 'string', 'max' => 255]
         ];
@@ -51,14 +51,14 @@ class AccrualsGroup extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
     }
-
-  /**
-   * @inheritdoc
-   */
-  public function behaviors()
-  {
-    return [
-      TimestampBehavior::className(),
-    ];
-  }
+    
+    /**
+    * @inheritdoc
+    */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
 }

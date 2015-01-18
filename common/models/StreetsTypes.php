@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "streets_types".
@@ -54,20 +55,20 @@ class StreetsTypes extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-           TimestampBehavior::className(),
-        ];
-    }
-
-    /**
      * @return \yii\db\ActiveQuery
      */
     public function getStreets()
     {
         return $this->hasMany(Streets::className(), ['street_type' => 'id']);
+    }
+    
+    /**
+    * @inheritdoc
+    */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
     }
 }

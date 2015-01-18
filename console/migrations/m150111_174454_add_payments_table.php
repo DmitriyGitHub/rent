@@ -19,8 +19,8 @@ class m150111_174454_add_payments_table extends Migration
       'description' => Schema::TYPE_STRING . ' NOT NULL COMMENT \'Payment type description\'',
 
       'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 10',
-      'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-      'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+      'created_at' => Schema::TYPE_INTEGER,
+      'updated_at' => Schema::TYPE_INTEGER,
     ], $tableOptions);
   }
 

@@ -20,16 +20,16 @@ class m150111_181009_add_houses_table extends Migration
       'part_type' => Schema::TYPE_SMALLINT . ' NOT NULL COMMENT \'House part type\'',
       'part' => Schema::TYPE_STRING . ' COMMENT \'House part description\'',
 
-      'street' => Schema::TYPE_INTEGER . ' NOT NULL COMMENT \'House street ID\'',
-      'sector' => Schema::TYPE_INTEGER . ' NOT NULL COMMENT \'House sector ID\'',
+      'street_id' => Schema::TYPE_INTEGER . ' NOT NULL COMMENT \'House street ID\'',
+      'sector_id' => Schema::TYPE_INTEGER . ' NOT NULL COMMENT \'House sector ID\'',
 
       'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 10',
-      'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-      'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+      'created_at' => Schema::TYPE_INTEGER,
+      'updated_at' => Schema::TYPE_INTEGER,
     ], $tableOptions);
 
-    $this->addForeignKey('FK_house_street', 'houses', 'street', 'streets', 'id', 'CASCADE', 'NO ACTION');
-    $this->addForeignKey('FK_house_sector', 'houses', 'sector', 'sectors', 'id', 'CASCADE', 'NO ACTION');
+    $this->addForeignKey('FK_house_street', 'houses', 'street_id', 'streets', 'id', 'CASCADE', 'NO ACTION');
+    $this->addForeignKey('FK_house_sector', 'houses', 'sector_id', 'sectors', 'id', 'CASCADE', 'NO ACTION');
 
   }
 
