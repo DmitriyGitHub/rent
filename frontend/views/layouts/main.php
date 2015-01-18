@@ -34,6 +34,23 @@ AppAsset::register($this);
             ]);
             $menuItems = [
                 ['label' => 'Home', 'url' => ['/site/index']],
+                ['label' => 'Basics',
+                  'items' => [
+                    ['label' => 'Areas', 'url' => ['/areas']],
+                    ['label' => 'Districts', 'url' => ['/districts']],
+                    ['label' => 'Accrual groups', 'url' => ['/accruals-group']],
+                    ['label' => 'Contract types', 'url' => ['/contracts-type']],
+                    ['label' => 'Houses', 'url' => ['/houses']],
+                    ['label' => 'Object parts', 'url' => ['/object-parts']],
+                    ['label' => 'Objects', 'url' => ['/objects']],
+                    ['label' => 'Organisations', 'url' => ['/organisations']],
+                    ['label' => 'Payment types', 'url' => ['/payments-type']],
+                    ['label' => 'Sectors', 'url' => ['/sectors']],
+                    ['label' => 'Service types', 'url' => ['/services-type']],
+                    ['label' => 'Streets', 'url' => ['/streets']],
+                    ['label' => 'Street types', 'url' => ['/streets-types']],
+                  ]
+                ],
                 ['label' => 'About', 'url' => ['/site/about']],
                 ['label' => 'Contact', 'url' => ['/site/contact']],
             ];
