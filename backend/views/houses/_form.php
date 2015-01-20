@@ -5,10 +5,24 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\models\Streets;
 use common\models\Sectors;
+use common\models\Houses;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Houses */
 /* @var $form yii\widgets\ActiveForm */
+$part_id = Html::getInputId($model, 'part');
+$part_type_id = Html::getInputId($model, 'part_type');
+$part_type_full = Houses::PART_TYPE_FULL;
+$this->registerJs(<<<JSCODE
+    addConditionalVisibility(
+        '#$part_id', 
+        '#$part_type_id', 
+        {
+            conditionCheckValue: ['$part_type_full', $part_type_full]
+        }
+    );
+JSCODE
+);
 ?>
 
 <div class="houses-form">

@@ -7,6 +7,7 @@ use common\models\Organisations;
 use common\models\Objects;
 use common\models\ContractsType;
 use kartik\money\MaskMoney;
+use kartik\widgets\DatePicker;
 
 
 /* @var $this yii\web\View */
@@ -20,17 +21,44 @@ use kartik\money\MaskMoney;
 
     <?= $form->field($model, 'number')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'date')->widget(DatePicker::widget([
-            'pluginOptions' => [
-                'autoclose'=>true,
-                'format' => 'dd-M-yyyy'
+    <?= 
+        $form->field($model, 'date')->widget(
+            DatePicker::classname(), 
+            [
+//                'options' => ['placeholder' => 'Enter birth date ...'],
+                'pluginOptions' => [
+                    'autoclose'=>true,
+                    'format' => 'yyyy-mm-dd',
+                ]
             ]
-        ])) 
+        )
     ?>
 
-    <?= $form->field($model, 'start_date')->textInput() ?>
+    <?= 
+        $form->field($model, 'start_date')->widget(
+            DatePicker::classname(), 
+            [
+//                'options' => ['placeholder' => 'Enter birth date ...'],
+                'pluginOptions' => [
+                    'autoclose'=>true,
+                    'format' => 'yyyy-mm-dd',
+                ]
+            ]
+        )
+    ?>
 
-    <?= $form->field($model, 'end_date')->textInput() ?>
+        <?= 
+        $form->field($model, 'end_date')->widget(
+            DatePicker::classname(), 
+            [
+//                'options' => ['placeholder' => 'Enter birth date ...'],
+                'pluginOptions' => [
+                    'autoclose'=>true,
+                    'format' => 'yyyy-mm-dd',
+                ]
+            ]
+        )
+    ?>
     
     <?= 
         $form->field($model, 'object_id')

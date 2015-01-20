@@ -21,6 +21,8 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
+        //Show field on form based on other field value
+        'js/fieldConditinalVisisbility.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

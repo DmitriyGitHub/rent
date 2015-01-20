@@ -44,6 +44,16 @@ class Houses extends \yii\db\ActiveRecord
             [['number', 'street_id', 'sector_id'], 'required'],
             [['number', 'part_type', 'street_id', 'sector_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['letter', 'part'], 'string', 'max' => 255],
+            [
+                'part',
+                'required',
+                'when' => function($model){
+                    return $model->part_type != self::PART_TYPE_FULL;
+                },
+                'whenClient' => "function (attribute, value) {
+                    return parseFloat($('#" . \yii\helpers\Html::getInputId($this, 'part_type') . "').val()) != " . self::PART_TYPE_FULL . ";
+                }",
+            ],
             [['part_type'], 'default', 'value' => self::PART_TYPE_FULL],
             [['part_type'], 'in', 'range' => [self::PART_TYPE_FULL, self::PART_TYPE_PARTIAL]],
         ];
