@@ -54,6 +54,7 @@ AppAsset::register($this);
                         ['label' => Yii::t('app', 'Contracts'), 'url' => ['/contracts']],
                         ['label' => Yii::t('app', 'Accruals'), 'url' => ['/accruals']],
                         ['label' => Yii::t('app', 'Payments'), 'url' => ['/payments']],
+                        ['label' => Yii::t('app', 'Inflations'), 'url' => ['/inflation']],
                     ]
                 ];
                 $menuItems[] = [
