@@ -19,6 +19,7 @@ use kartik\widgets\DatePicker;
                 'pluginOptions' => [
                     'autoclose'=>true,
                     'format' => 'yyyy-mm-dd',
+                    'minViewMode' => 1,
                 ]
             ]
         ) 

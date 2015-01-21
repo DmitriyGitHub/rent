@@ -30,10 +30,10 @@ class Inflation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date'], 'safe'],
-            [['amount'], 'required'],
+            [['amount', 'date'], 'required'],
             [['amount'], 'number'],
-            [['created_at', 'updated_at'], 'integer']
+            [['created_at', 'updated_at'], 'integer'],
+            [['date'], 'unique'],
         ];
     }
 

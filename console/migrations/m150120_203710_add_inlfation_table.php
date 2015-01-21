@@ -15,12 +15,13 @@ class m150120_203710_add_inlfation_table extends Migration
 
     $this->createTable('{{%inflation}}', [
         'id' => Schema::TYPE_PK,
-        'date' => Schema::TYPE_DATE,
+        'date' => Schema::TYPE_DATE . ' NOT NULL',
         'amount' => Schema::TYPE_DECIMAL . '(15,2) NOT NULL',
         
         'created_at' => Schema::TYPE_INTEGER,
         'updated_at' => Schema::TYPE_INTEGER,
     ], $tableOptions);
+    $this->createIndex('INDEX_inflation_date', 'inflation', 'date', TRUE);
   }
 
     public function down()
