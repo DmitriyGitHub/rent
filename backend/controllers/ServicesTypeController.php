@@ -4,12 +4,12 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\ServicesType;
-use backend\models\ServicesTypeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
+use yii\data\ActiveDataProvider;
 
 /**
  * ServicesTypeController implements the CRUD actions for ServicesType model.
@@ -46,11 +46,13 @@ class ServicesTypeController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ServicesTypeSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $query = ServicesType::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
