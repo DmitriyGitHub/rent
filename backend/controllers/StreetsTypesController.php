@@ -4,7 +4,6 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\StreetsTypes;
-use backend\models\StreetsTypesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -105,7 +104,7 @@ class StreetsTypesController extends Controller
     {
         $model = $this->findModel($id);
         if(count($model->streets)){
-            throw new ForbiddenHttpException('Streets related to this service type still exist. It can not be deleted.');
+            throw new ForbiddenHttpException('Streets related to this street type still exist. It can not be deleted.');
         }
         $model->delete();
 

@@ -4,11 +4,12 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\ObjectParts;
-use backend\models\ObjectPartsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
+use yii\data\ActiveDataProvider;
 
 /**
  * ObjectPartsController implements the CRUD actions for ObjectParts model.
@@ -45,11 +46,13 @@ class ObjectPartsController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ObjectPartsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $query = ObjectParts::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -76,7 +79,7 @@ class ObjectPartsController extends Controller
         $model = new ObjectParts();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -95,7 +98,7 @@ class ObjectPartsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -111,7 +114,11 @@ class ObjectPartsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if(count($model->objects)){
+            throw new ForbiddenHttpException('Objects related to this object part still exist. It can not be deleted.');
+        }
+        $model->delete();
 
         return $this->redirect(['index']);
     }
