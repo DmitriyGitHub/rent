@@ -35,6 +35,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         if(count($model->payments)){
                             return '';
                         }
+                        if(in_array($model->id, $model->nonRemovable)){
+                            return '';
+                        }
                         return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
                             'title' => Yii::t('yii', 'Delete'),
                             'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),

@@ -106,6 +106,9 @@ class PaymentsTypeController extends Controller
         if(count($model->payments)){
             throw new ForbiddenHttpException('Payments related to this payment type still exist. It can not be deleted.');
         }
+        if(in_array($model->id, $model->nonRemovable)){
+            throw new ForbiddenHttpException('This payment type is a system one and can not be deleted.');
+        }
         $model->delete();
 
         return $this->redirect(['index']);
