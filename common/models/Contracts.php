@@ -25,8 +25,9 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $updated_at
  *
  * @property Accruals[] $accruals
- * @property Objects $object
+ * @property ContractPriceHistory[] $contractPriceHistories
  * @property ContractsType $type
+ * @property Objects $object
  * @property Organisations $organisation
  * @property Payments[] $payments
  */
@@ -89,9 +90,9 @@ class Contracts extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getObject()
+    public function getContractPriceHistories()
     {
-        return $this->hasOne(Objects::className(), ['id' => 'object_id']);
+        return $this->hasMany(ContractPriceHistory::className(), ['contract_id' => 'id']);
     }
 
     /**
@@ -100,6 +101,14 @@ class Contracts extends \yii\db\ActiveRecord
     public function getType()
     {
         return $this->hasOne(ContractsType::className(), ['id' => 'type_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getObject()
+    {
+        return $this->hasOne(Objects::className(), ['id' => 'object_id']);
     }
 
     /**

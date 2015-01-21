@@ -37,26 +37,34 @@ AppAsset::register($this);
             if (Yii::$app->user->isGuest) {
                 $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
             } else {                
-                $menuItems[] = ['label' => Yii::t('app', 'Vocabularies'),
+                $menuItems[] = ['label' => Yii::t('app', 'Payments'),
                     'items' => [
-                        ['label' => Yii::t('app', 'Service types'), 'url' => ['/services-type']],
-                        ['label' => Yii::t('app', 'Payment types'), 'url' => ['/payments-type']],
-                        ['label' => Yii::t('app', 'Contract types'), 'url' => ['/contracts-type']],
-                        ['label' => Yii::t('app', 'Street types'), 'url' => ['/streets-types']],
-                        ['label' => Yii::t('app', 'Streets'), 'url' => ['/streets']],
-                        ['label' => Yii::t('app', 'Areas'), 'url' => ['/areas']],
-                        ['label' => Yii::t('app', 'Districts'), 'url' => ['/districts']],
-                        ['label' => Yii::t('app', 'Sectors'), 'url' => ['/sectors']],
-                        ['label' => Yii::t('app', 'Houses'), 'url' => ['/houses']],
-                        ['label' => Yii::t('app', 'Object parts'), 'url' => ['/object-parts']],
-                        ['label' => Yii::t('app', 'Objects'), 'url' => ['/objects']],
-                        ['label' => Yii::t('app', 'Organisations'), 'url' => ['/organisations']],
                         ['label' => Yii::t('app', 'Contracts'), 'url' => ['/contracts']],
                         ['label' => Yii::t('app', 'Accruals'), 'url' => ['/accruals']],
                         ['label' => Yii::t('app', 'Payments'), 'url' => ['/payments']],
                         ['label' => Yii::t('app', 'Inflations'), 'url' => ['/inflation']],
                     ]
                 ];
+                $menuItems[] = ['label' => Yii::t('app', 'Objects'),
+                    'items' => [
+                        ['label' => Yii::t('app', 'Streets'), 'url' => ['/streets']],
+                        ['label' => Yii::t('app', 'Areas'), 'url' => ['/areas']],
+                        ['label' => Yii::t('app', 'Districts'), 'url' => ['/districts']],
+                        ['label' => Yii::t('app', 'Sectors'), 'url' => ['/sectors']],
+                        ['label' => Yii::t('app', 'Houses'), 'url' => ['/houses']],
+                        ['label' => Yii::t('app', 'Objects'), 'url' => ['/objects']],
+                    ]
+                ];
+                $menuItems[] = ['label' => Yii::t('app', 'Vocabularies'),
+                    'items' => [
+                        ['label' => Yii::t('app', 'Service types'), 'url' => ['/services-type']],
+                        ['label' => Yii::t('app', 'Payment types'), 'url' => ['/payments-type']],
+                        ['label' => Yii::t('app', 'Contract types'), 'url' => ['/contracts-type']],
+                        ['label' => Yii::t('app', 'Street types'), 'url' => ['/streets-types']],
+                        ['label' => Yii::t('app', 'Object parts'), 'url' => ['/object-parts']],
+                    ]
+                ];
+                
                 $menuItems[] = [
                     'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
                     'url' => ['/site/logout'],
