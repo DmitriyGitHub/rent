@@ -4,11 +4,12 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Areas;
-use backend\models\AreasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
+use yii\data\ActiveDataProvider;
 
 /**
  * AreasController implements the CRUD actions for Areas model.
@@ -45,24 +46,14 @@ class AreasController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new AreasSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $query = Areas::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Areas model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
         ]);
     }
 
@@ -76,7 +67,7 @@ class AreasController extends Controller
         $model = new Areas();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -95,7 +86,7 @@ class AreasController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -111,7 +102,11 @@ class AreasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if(count($model->districts)){
+            throw new ForbiddenHttpException('Districts related to this area still exist. It can not be deleted.');
+        }
+        $model->delete();
 
         return $this->redirect(['index']);
     }

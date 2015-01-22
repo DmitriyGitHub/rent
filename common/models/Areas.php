@@ -59,7 +59,7 @@ class Areas extends \yii\db\ActiveRecord
      */
     public function getDistricts()
     {
-        return $this->hasMany(Districts::className(), ['area' => 'id']);
+        return $this->hasMany(Districts::className(), ['area_id' => 'id']);
     }
     
     /**
