@@ -36,7 +36,8 @@ class Districts extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'area_id'], 'required'],
-            [['description', 'area_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['area_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['description'], 'string'],
             [['name'], 'string', 'max' => 255]
         ];
     }
@@ -70,7 +71,7 @@ class Districts extends \yii\db\ActiveRecord
      */
     public function getSectors()
     {
-        return $this->hasMany(Sectors::className(), ['sector_district' => 'id']);
+        return $this->hasMany(Sectors::className(), ['district_id' => 'id']);
     }
     
     /**

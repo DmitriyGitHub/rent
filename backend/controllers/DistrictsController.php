@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
+use yii\data\ActiveDataProvider;
 
 /**
  * DistrictsController implements the CRUD actions for Districts model.
@@ -55,18 +57,6 @@ class DistrictsController extends Controller
     }
 
     /**
-     * Displays a single Districts model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new Districts model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -76,7 +66,7 @@ class DistrictsController extends Controller
         $model = new Districts();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -95,7 +85,7 @@ class DistrictsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -111,7 +101,11 @@ class DistrictsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if(count($model->sectors)){
+            throw new ForbiddenHttpException('Sectors related to this district still exist. It can not be deleted.');
+        }
+        $model->delete();
 
         return $this->redirect(['index']);
     }
