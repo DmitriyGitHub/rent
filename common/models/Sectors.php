@@ -62,7 +62,7 @@ class Sectors extends \yii\db\ActiveRecord
      */
     public function getHouses()
     {
-        return $this->hasMany(Houses::className(), ['sector' => 'id']);
+        return $this->hasMany(Houses::className(), ['sector_id' => 'id']);
     }
 
     /**
