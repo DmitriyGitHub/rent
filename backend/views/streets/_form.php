@@ -15,7 +15,7 @@ use yii\helpers\ArrayHelper;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= 
-        $form->field($model, 'street_type')
+        $form->field($model, 'street_type_id')
             ->dropDownList(
                 ArrayHelper::map(StreetsTypes::find()->all(), 'id', 'full_name')
             ) 

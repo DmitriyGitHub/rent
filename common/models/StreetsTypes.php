@@ -59,7 +59,7 @@ class StreetsTypes extends \yii\db\ActiveRecord
      */
     public function getStreets()
     {
-        return $this->hasMany(Streets::className(), ['street_type' => 'id']);
+        return $this->hasMany(Streets::className(), ['street_type_id' => 'id']);
     }
     
     /**

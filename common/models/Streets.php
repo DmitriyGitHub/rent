@@ -34,8 +34,8 @@ class Streets extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'street_type'], 'required'],
-            [['street_type', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'street_type_id'], 'required'],
+            [['street_type_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 255]
         ];
     }
@@ -48,7 +48,7 @@ class Streets extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Street name'),
-            'street_type' => Yii::t('app', 'Street type ID'),
+            'street_type_id' => Yii::t('app', 'Street type ID'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
@@ -60,7 +60,7 @@ class Streets extends \yii\db\ActiveRecord
      */
     public function getHouses()
     {
-        return $this->hasMany(Houses::className(), ['street' => 'id']);
+        return $this->hasMany(Houses::className(), ['street_id' => 'id']);
     }
 
     /**
@@ -68,7 +68,7 @@ class Streets extends \yii\db\ActiveRecord
      */
     public function getStreetType()
     {
-        return $this->hasOne(StreetsTypes::className(), ['id' => 'street_type']);
+        return $this->hasOne(StreetsTypes::className(), ['id' => 'street_type_id']);
     }
     
     /**

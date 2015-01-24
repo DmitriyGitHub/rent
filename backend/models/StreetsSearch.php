@@ -18,7 +18,7 @@ class StreetsSearch extends Streets
     public function rules()
     {
         return [
-            [['id', 'street_type', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'street_type_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -57,7 +57,7 @@ class StreetsSearch extends Streets
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'street_type' => $this->street_type,
+            'street_type_id' => $this->street_type_id,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
