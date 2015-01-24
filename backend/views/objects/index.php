@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
+use common\models\ObjectParts;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ObjectsSearch */
@@ -13,7 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="objects-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
@@ -25,13 +26,35 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
-            'house.fullAddress',
-            'partType.name',
+            [
+                'attribute' => 'houseAddress',
+                'value' => 'house.fullAddress',
+            ],
+            [
+                'attribute' => 'part_type_id',
+                'value' => 'partType.name',
+                'filter' => ArrayHelper::map(ObjectParts::find()->all(), 'id', 'name'),
+            ],
             'part_description',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'buttons' => [
+                    'delete' => function ($url, $model, $key) {
+                        if(count($model->contracts)){
+                            return '';
+                        }
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                            'title' => Yii::t('yii', 'Delete'),
+                            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                            'data-method' => 'post',
+                            'data-pjax' => '0',
+                        ]);
+                    }
+                ],
+            ],
         ],
     ]); ?>
 
