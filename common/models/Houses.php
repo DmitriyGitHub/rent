@@ -99,7 +99,7 @@ class Houses extends \yii\db\ActiveRecord
      */
     public function getObjects()
     {
-        return $this->hasMany(Objects::className(), ['address' => 'id']);
+        return $this->hasMany(Objects::className(), ['house_id' => 'id']);
     }
     
     public function getPartDescription(){        

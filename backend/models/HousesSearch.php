@@ -12,6 +12,7 @@ use common\models\Houses;
  */
 class HousesSearch extends Houses
 {
+    public $streetName;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class HousesSearch extends Houses
     {
         return [
             [['id', 'number', 'part_type', 'street_id', 'sector_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['letter', 'part'], 'safe'],
+            [['streetName', 'letter', 'part'], 'safe'],
         ];
     }
 
@@ -46,6 +47,16 @@ class HousesSearch extends Houses
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+//                var_dump($dataProvider->getSort()->attributes['part']);exit();
+        $query->joinWith('street');
+        $dataProvider->sort->attributes['streetName'] = [
+            'asc' => ['streets.name' => SORT_ASC],
+            'desc' => ['streets.name' => SORT_DESC],
+            'default' => SORT_ASC,
+        ];
+        
+
+
 
         $this->load($params);
 
@@ -57,15 +68,17 @@ class HousesSearch extends Houses
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'number' => $this->number,
             'part_type' => $this->part_type,
-            'street_id' => $this->street_id,
             'sector_id' => $this->sector_id,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
+        
+        $query->andFilterWhere(['like', 'streets.name', $this->streetName]);
 
+        $query->andFilterWhere(['like', 'number', $this->number]);
+        
         $query->andFilterWhere(['like', 'letter', $this->letter])
             ->andFilterWhere(['like', 'part', $this->part]);
 

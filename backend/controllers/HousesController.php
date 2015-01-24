@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use \yii\web\ForbiddenHttpException;
 
 /**
  * HousesController implements the CRUD actions for Houses model.
@@ -55,18 +56,6 @@ class HousesController extends Controller
     }
 
     /**
-     * Displays a single Houses model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new Houses model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -76,7 +65,7 @@ class HousesController extends Controller
         $model = new Houses();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -95,7 +84,7 @@ class HousesController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -111,7 +100,11 @@ class HousesController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if(count($model->objects)){
+            throw new ForbiddenHttpException('Objects related to this house still exist. It can not be deleted.');
+        }
+        $model->delete();
 
         return $this->redirect(['index']);
     }
