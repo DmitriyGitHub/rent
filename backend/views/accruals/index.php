@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
+use common\models\ServicesType;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\AccrualsSearch */
@@ -13,7 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="accruals-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
@@ -25,12 +26,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'date',
             'amount',
-            'contract_id',
-            'service_id',
+            [
+                'attribute' => 'contract_number',
+                'value' => 'contract.number',
+            ],
+            [
+                'attribute' => 'service_id',
+                'value' => 'service.name',
+                'filter' => ArrayHelper::map(ServicesType::find()->all(), 'id', 'name'),
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -12,6 +12,7 @@ use common\models\Accruals;
  */
 class AccrualsSearch extends Accruals
 {
+    public $contract_number;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class AccrualsSearch extends Accruals
     {
         return [
             [['id', 'contract_id', 'service_id', 'created_at', 'updated_at'], 'integer'],
-            [['date'], 'safe'],
+            [['date', 'contract_number'], 'safe'],
             [['amount'], 'number'],
         ];
     }
@@ -47,6 +48,12 @@ class AccrualsSearch extends Accruals
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        
+        $dataProvider->sort->attributes['contract_number'] = [
+            'asc' => ['contracts.number' => SORT_ASC],
+            'desc' => ['contracts.number' => SORT_DESC],
+            'default' => SORT_ASC,
+        ];
 
         $this->load($params);
 
@@ -60,11 +67,11 @@ class AccrualsSearch extends Accruals
             'id' => $this->id,
             'date' => $this->date,
             'amount' => $this->amount,
-            'contract_id' => $this->contract_id,
             'service_id' => $this->service_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
+        
+        $query->joinWith('contract');
+        $query->andFilterWhere(['like', 'contracts.number', $this->contract_number]);
 
         return $dataProvider;
     }
