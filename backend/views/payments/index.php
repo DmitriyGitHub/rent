@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\ServicesType;
+use yii\helpers\ArrayHelper;
+use common\models\PaymentsType;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PaymentsSearch */
@@ -25,14 +28,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'number',
             'date',
             'amount',
-            'contract_id',
-            'type_id',
-            // 'service_id',
+            [
+                'attribute' => 'contract_number',
+                'value' => 'contract.number',
+            ],
+            [
+                'attribute' => 'type_id',
+                'value' => 'type.name',
+                'filter' => ArrayHelper::map(PaymentsType::find()->all(), 'id', 'name'),
+            ],
+            [
+                'attribute' => 'service_id',
+                'value' => 'service.name',
+                'filter' => ArrayHelper::map(ServicesType::find()->all(), 'id', 'name'),
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -12,6 +12,7 @@ use common\models\Payments;
  */
 class PaymentsSearch extends Payments
 {
+    public $contract_number;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class PaymentsSearch extends Payments
     {
         return [
             [['id', 'contract_id', 'type_id', 'service_id', 'created_at', 'updated_at'], 'integer'],
-            [['number', 'date'], 'safe'],
+            [['number', 'date', 'contract_number'], 'safe'],
             [['amount'], 'number'],
         ];
     }
@@ -55,19 +56,23 @@ class PaymentsSearch extends Payments
             // $query->where('0=1');
             return $dataProvider;
         }
+        
+        $dataProvider->sort->attributes['contract_number'] = [
+            'asc' => ['contracts.number' => SORT_ASC],
+            'desc' => ['contracts.number' => SORT_DESC],
+            'default' => SORT_ASC,
+        ];
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'date' => $this->date,
-            'amount' => $this->amount,
-            'contract_id' => $this->contract_id,
-            'type_id' => $this->type_id,
-            'service_id' => $this->service_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'payments.date' => $this->date,
+            'payments.amount' => $this->amount,
+            'payments.type_id' => $this->type_id,
+            'payments.service_id' => $this->service_id,
         ]);
 
         $query->andFilterWhere(['like', 'number', $this->number]);
+        $query->joinWith('contract');
+        $query->andFilterWhere(['like', 'contracts.number', $this->contract_number]);
 
         return $dataProvider;
     }
