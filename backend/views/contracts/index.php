@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
+use common\models\Objects;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\ContractsSearch */
@@ -31,15 +33,27 @@ $this->params['breadcrumbs'][] = $this->title;
             'date',
             'start_date',
             'end_date',
-            'object_id',
-            // 'organisation_id',
-            // 'type_id',
-            // 'square',
-            // 'descriptions',
-            // 'initial_price',
-            // 'account_number',
+            [
+                'attribute' => 'object_address',
+                'value' => 'object.fullAddress',
+            ],
+            [
+                'attribute' => 'organisation_name',
+                'value' => 'organisation.name',
+            ],
+            [
+                'attribute' => 'type_name',
+                'value' => 'type.name',
+            ],
+            'square',
+            'descriptions',
+            'initial_price',
+            'account_number',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update}',
+            ],
         ],
     ]); ?>
 

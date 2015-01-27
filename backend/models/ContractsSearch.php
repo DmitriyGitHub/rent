@@ -12,6 +12,9 @@ use common\models\Contracts;
  */
 class ContractsSearch extends Contracts
 {
+    public $object_address;
+    public $organisation_name;
+    public $type_name;
     /**
      * @inheritdoc
      */
@@ -19,7 +22,7 @@ class ContractsSearch extends Contracts
     {
         return [
             [['id', 'object_id', 'organisation_id', 'status', 'type_id', 'created_at', 'updated_at'], 'integer'],
-            [['number', 'date', 'start_date', 'end_date', 'descriptions', 'account_number'], 'safe'],
+            [['type_name', 'organisation_name', 'object_address', 'number', 'date', 'start_date', 'end_date', 'descriptions', 'account_number'], 'safe'],
             [['square', 'initial_price'], 'number'],
         ];
     }
