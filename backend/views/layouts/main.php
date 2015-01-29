@@ -36,7 +36,8 @@ AppAsset::register($this);
             ];
             if (Yii::$app->user->isGuest) {
                 $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-            } else {                
+            } else {    
+                $menuItems[] = ['label' => Yii::t('app', 'Organisations'), 'url' => ['/organisations']];
                 $menuItems[] = ['label' => Yii::t('app', 'Payments'),
                     'items' => [
                         ['label' => Yii::t('app', 'Contracts'), 'url' => ['/contracts']],

@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Contracts;
+use common\helpers\SearchHelper;
 
 /**
  * ContractsSearch represents the model behind the search form about `common\models\Contracts`.
@@ -58,21 +59,40 @@ class ContractsSearch extends Contracts
             // $query->where('0=1');
             return $dataProvider;
         }
+        
+        $dataProvider->sort->attributes['organisation_name'] = [
+            'asc' => ['organisations.name' => SORT_ASC],
+            'desc' => ['organisations.name' => SORT_DESC],
+            'default' => SORT_ASC,
+        ];
+        
+        $dataProvider->sort->attributes['type_name'] = [
+            'asc' => ['contracts_type.name' => SORT_ASC],
+            'desc' => ['contracts_type.name' => SORT_DESC],
+            'default' => SORT_ASC,
+        ];
+        
+        SearchHelper::sortByHouse('object_address', $dataProvider, $query, 'object.');
+        
+        if($this->object_address){
+            SearchHelper::filterByHouse($this->object_address, $query, 'object.');
+        }
 
         $query->andFilterWhere([
             'id' => $this->id,
             'date' => $this->date,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'object_id' => $this->object_id,
-            'organisation_id' => $this->organisation_id,
             'status' => $this->status,
-            'type_id' => $this->type_id,
             'square' => $this->square,
             'initial_price' => $this->initial_price,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
+        
+        $query->joinWith('type');
+        $query->andFilterWhere(['like', 'contracts_type.name', $this->type_name]);
+        
+        $query->joinWith('organisation');
+        $query->andFilterWhere(['like', 'organisations.name', $this->organisation_name]);
 
         $query->andFilterWhere(['like', 'number', $this->number])
             ->andFilterWhere(['like', 'descriptions', $this->descriptions])

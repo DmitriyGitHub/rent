@@ -30,9 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'number',
-            'date',
-            'start_date',
-            'end_date',
+            'date:date',
+            'start_date:date',
+            'end_date:date',
             [
                 'attribute' => 'object_address',
                 'value' => 'object.fullAddress',
