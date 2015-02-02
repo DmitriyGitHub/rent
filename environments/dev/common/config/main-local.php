@@ -1,5 +1,6 @@
 <?php
 $config =  [
+    'language' => 'ru-RU',
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
@@ -16,6 +17,15 @@ $config =  [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/messages',
+                    'sourceLanguage' => 'en-US',
+                ],
+            ]
+        ]
     ],
     'modules' => [
         'gridview' =>  [
