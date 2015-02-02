@@ -22,7 +22,8 @@
         "kartik-v/yii2-widget-depdrop": "*",
         "kartik-v/yii2-money": "*",
         "kartik-v/yii2-datecontrol": "dev-master",
-        "kartik-v/yii2-widgets": "*"
+        "kartik-v/yii2-widgets": "*",
+        "kartik-v/yii2-mpdf": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

@@ -1,52 +1,71 @@
 <?php
+
+use yii\helpers\Html;
+use kartik\grid\GridView;
+use yii\helpers\ArrayHelper;
+use common\models\Objects;
+
 /* @var $this yii\web\View */
+/* @var $searchModel backend\models\ContractsSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'My Yii Application';
+$this->title = Yii::t('app', 'Contracts');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-index">
+<div class="contracts-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+    <p>
+        <?= Html::a(Yii::t('app', 'Create {modelClass}', [
+    'modelClass' => 'Contracts',
+]), ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            [
+                'class' => '\kartik\grid\ExpandRowColumn',
+                'value' => function ($model, $key, $index, $column) {
+                    return GridView::ROW_COLLAPSED;
+                },
+                'detailUrl' => 'site/contract-data',
+                'allowBatchToggle' => FALSE,
+            ],
 
-    <div class="body-content">
+            'number',
+            'date:date',
+            'start_date:date',
+            'end_date:date',
+            [
+                'attribute' => 'object_address',
+                'value' => 'object.fullAddress',
+            ],
+            [
+                'attribute' => 'organisation_name',
+                'value' => 'organisation.name',
+            ],
+            [
+                'attribute' => 'type_name',
+                'value' => 'type.name',
+            ],
+            'square',
+            'descriptions',
+            'initial_price',
+            'account_number',
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update}',
+            ],
+        ],
+        'toolbar'=>[
+            '{export}',
+            '{toggleData}'
+        ]
+    ]); ?>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
-    </div>
 </div>
