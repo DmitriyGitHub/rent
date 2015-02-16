@@ -136,4 +136,20 @@ class Contracts extends \yii\db\ActiveRecord
             TimestampBehavior::className(),
         ];
     }
+    
+    public function getLatestPayment(){
+        $latestPayment = $this->getPayments()->orderBy(['date' => SORT_DESC])->one();
+        if($latestPayment){
+            return $latestPayment->amount;
+        }
+        return '';
+    }
+    
+    public function getLatestAccrual(){
+        $latestAccrual = $this->getAccruals()->orderBy(['date' => SORT_DESC])->one();
+        if($latestAccrual){
+            return $latestAccrual->amount;
+        }
+        return '';
+    }
 }

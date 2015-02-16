@@ -36,31 +36,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 'allowBatchToggle' => FALSE,
             ],
 
-            'number',
-            'date:date',
-            'start_date:date',
-            'end_date:date',
-            [
-                'attribute' => 'object_address',
-                'value' => 'object.fullAddress',
-            ],
             [
                 'attribute' => 'organisation_name',
                 'value' => 'organisation.name',
             ],
             [
-                'attribute' => 'type_name',
-                'value' => 'type.name',
+                'attribute' => 'number',
             ],
-            'square',
-            'descriptions',
-            'initial_price',
-            'account_number',
-
+            [
+                'attribute' => 'object_address',
+                'value' => 'object.fullAddress',
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update}',
             ],
+            'latestAccrual',
+            'latestPayment',
         ],
         'toolbar'=>[
             '{export}',

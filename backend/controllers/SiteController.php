@@ -8,6 +8,8 @@ use common\models\LoginForm;
 use yii\filters\VerbFilter;
 use backend\models\DefaultSearch;
 use common\models\Contracts;
+use common\models\Accruals;
+use yii\data\ActiveDataProvider;
 
 /**
  * Site controller
@@ -95,12 +97,25 @@ class SiteController extends Controller
     }
     
     public function actionContractData() {
-        if (isset($_POST['expandRowKey'])) {
-            $model = Contracts::findOne($_POST['expandRowKey']);
-//            return $this->renderPartial('_book-details', ['model'=>$model]);
-            return '<div class="alert alert-warning">Data found</div>';
-        } else {
-            return '<div class="alert alert-danger">No data found</div>';
+        if (!empty(Yii::$app->request->post('expandRowKey'))) {
+            $model = Contracts::findOne(Yii::$app->request->post('expandRowKey'));
+            if($model){
+                $query = $model->getAccruals();
+
+                $accruals = new ActiveDataProvider([
+                    'query' => $query,
+                ]);
+                
+                $query = $model->getPayments();
+
+                $payments = new ActiveDataProvider([
+                    'query' => $query,
+                ]);
+                
+                return $this->renderPartial('_contract-details', ['model'=>$model, 'accruals' => $accruals, 'payments' => $payments]);
+            }
         }
+            
+        return '<div class="alert alert-danger">No data found</div>';
     }
 }

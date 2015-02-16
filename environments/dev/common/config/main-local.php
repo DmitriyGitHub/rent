@@ -18,6 +18,8 @@ $config =  [
             'useFileTransport' => true,
         ],
         'i18n' => [
+            'class' => Zelenin\yii\modules\I18n\components\I18N::className(),
+            'languages' => ['ru-RU'],
             'translations' => [
                 'app*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
@@ -28,6 +30,7 @@ $config =  [
         ]
     ],
     'modules' => [
+        'i18n' => Zelenin\yii\modules\I18n\Module::className(),
         'gridview' =>  [
             'class' => '\kartik\grid\Module'
             // enter optional module parameters below - only if you need to
