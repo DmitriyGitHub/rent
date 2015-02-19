@@ -23,10 +23,8 @@ class m150117_191950_add_contract_table extends Migration
         'organisation_id' => Schema::TYPE_INTEGER,
         
         'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 10',
-        'type_id' => Schema::TYPE_INTEGER,
-        'square' => Schema::TYPE_DECIMAL . '(15,4)',
+        'type_id' => Schema::TYPE_INTEGER,        
         'descriptions' => Schema::TYPE_STRING,
-        'initial_price' => Schema::TYPE_DECIMAL . '(15,2)',
         'account_number' => Schema::TYPE_STRING,
         
         'created_at' => Schema::TYPE_INTEGER,

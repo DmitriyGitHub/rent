@@ -53,8 +53,8 @@ class Contracts extends \yii\db\ActiveRecord
             [['number'], 'required'],
             [['date', 'start_date', 'end_date'], 'safe'],
             [['object_id', 'organisation_id', 'status', 'type_id', 'created_at', 'updated_at'], 'integer'],
-            [['square', 'initial_price'], 'number'],
-            [['number', 'descriptions', 'account_number'], 'string', 'max' => 255]
+            [['square', 'price', 'expert_assessment', 'percentage'], 'number'],
+            [['number', 'descriptions', 'account_number', 'use_purpose'], 'string', 'max' => 255]
         ];
     }
 
@@ -95,7 +95,7 @@ class Contracts extends \yii\db\ActiveRecord
      */
     public function getContractPriceHistories()
     {
-        return $this->hasMany(ContractPriceHistory::className(), ['contract_id' => 'id']);
+        return $this->hasMany(ContractPriceHistory::className(), ['contract_id' => 'id'])->via('contractAdditions');
     }
 
     /**
@@ -127,7 +127,7 @@ class Contracts extends \yii\db\ActiveRecord
      */
     public function getExpertAssessmentHistories()
     {
-        return $this->hasMany(ExpertAssessmentHistory::className(), ['contract_id' => 'id']);
+        return $this->hasMany(ExpertAssessmentHistory::className(), ['contract_id' => 'id'])->via('contractAdditions');
     }
 
     /**
