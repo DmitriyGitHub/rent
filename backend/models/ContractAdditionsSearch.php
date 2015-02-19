@@ -5,22 +5,22 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\ContractPriceHistory;
+use common\models\ContractAdditions;
 
 /**
- * ContractPriceHistorySearch represents the model behind the search form about `common\models\ContractPriceHistory`.
+ * ContractAdditionsSearch represents the model behind the search form about `common\models\ContractAdditions`.
  */
-class ContractPriceHistorySearch extends ContractPriceHistory
+class ContractAdditionsSearch extends ContractAdditions
 {
+    public $contract_number;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'contract_additions_id', 'created_at', 'updated_at'], 'integer'],
-            [['date'], 'safe'],
-            [['amount'], 'number'],
+            [['id', 'created_at', 'updated_at'], 'integer'],
+            [['date', 'number', 'contract_number', 'description'], 'safe'],
         ];
     }
 
@@ -42,11 +42,17 @@ class ContractPriceHistorySearch extends ContractPriceHistory
      */
     public function search($params)
     {
-        $query = ContractPriceHistory::find();
+        $query = ContractAdditions::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        
+        $dataProvider->sort->attributes['contract_number'] = [
+            'asc' => ['contracts.number' => SORT_ASC],
+            'desc' => ['contracts.number' => SORT_DESC],
+            'default' => SORT_ASC,
+        ];
 
         $this->load($params);
 
@@ -55,15 +61,18 @@ class ContractPriceHistorySearch extends ContractPriceHistory
             // $query->where('0=1');
             return $dataProvider;
         }
+        $query->joinWith('contract');
 
         $query->andFilterWhere([
             'id' => $this->id,
             'date' => $this->date,
-            'amount' => $this->amount,
-            'contract_additions_id' => $this->contract_additions_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
+
+        $query->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'contracts.number', $this->contract_number])
+            ->andFilterWhere(['like', 'number', $this->number]);
 
         return $dataProvider;
     }

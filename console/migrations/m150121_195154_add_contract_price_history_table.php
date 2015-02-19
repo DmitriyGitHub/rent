@@ -17,15 +17,11 @@ class m150121_195154_add_contract_price_history_table extends Migration
         'id' => Schema::TYPE_PK,
         'date' => Schema::TYPE_DATE,
         'amount' => Schema::TYPE_DECIMAL . '(15,2) NOT NULL',
-        'contract_id' => Schema::TYPE_INTEGER,
-        'addition_number' => Schema::TYPE_STRING . ' COMMENT \'Contract addition number\'',
-        'description' => Schema::TYPE_STRING,
+        'contract_additions_id' => Schema::TYPE_INTEGER . ' NOT NULL',
         
         'created_at' => Schema::TYPE_INTEGER,
         'updated_at' => Schema::TYPE_INTEGER,
     ], $tableOptions);
-    
-    $this->addForeignKey('FK_contract_price_history_contract', 'contract_price_history', 'contract_id', 'contracts', 'id', 'CASCADE', 'NO ACTION');
 
   }
 

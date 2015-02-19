@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\ContractPriceHistorySearch */
+/* @var $model backend\models\ContractAdditionsSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="contract-price-history-search">
+<div class="contract-additions-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,9 +17,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'date') ?>
 
-    <?= $form->field($model, 'amount') ?>
+    <?= $form->field($model, 'contract_id') ?>
 
-    <?= $form->field($model, 'contract_additions_id') ?>
+    <?= $form->field($model, 'number') ?>
+
+    <?= $form->field($model, 'description') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\ContractPriceHistory */
+/* @var $model common\models\PercentageHistory */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Contract Price Histories'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Percentage Histories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="contract-price-history-view">
+<div class="percentage-history-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -28,8 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'date',
+            'start_date',
             'amount',
+            'use_purpose',
             'contract_additions_id',
         ],
     ]) ?>

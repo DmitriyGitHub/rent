@@ -35,7 +35,7 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['index', 'contract-data'],
+                        'actions' => ['index', 'contract-data', 'create-accruals'],
                         'allow' => TRUE,
                         'matchCallback' => '\common\models\User::hasBackendAccess'
                     ],
@@ -117,5 +117,13 @@ class SiteController extends Controller
         }
             
         return '<div class="alert alert-danger">No data found</div>';
+    }
+    
+    public function actionCreateAccruals(){
+        $contracts = Contracts::find()->andWhere(['>', 'end_date', date('Y-m-d')])->andWhere(['<=', 'start_date', date('Y-m-d')])->all();
+        foreach($contracts as $contract){
+            
+        }
+        var_dump($contracts);
     }
 }

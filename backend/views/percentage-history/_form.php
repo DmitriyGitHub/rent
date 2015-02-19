@@ -4,17 +4,19 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\ContractPriceHistory */
+/* @var $model common\models\PercentageHistory */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="contract-price-history-form">
+<div class="percentage-history-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'date')->textInput() ?>
+    <?= $form->field($model, 'start_date')->textInput() ?>
 
     <?= $form->field($model, 'amount')->textInput(['maxlength' => 15]) ?>
+
+    <?= $form->field($model, 'use_purpose')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'contract_additions_id')->textInput() ?>
 

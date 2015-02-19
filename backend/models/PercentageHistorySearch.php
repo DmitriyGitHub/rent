@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\ContractPriceHistory;
+use common\models\PercentageHistory;
 
 /**
- * ContractPriceHistorySearch represents the model behind the search form about `common\models\ContractPriceHistory`.
+ * PercentageHistorySearch represents the model behind the search form about `common\models\PercentageHistory`.
  */
-class ContractPriceHistorySearch extends ContractPriceHistory
+class PercentageHistorySearch extends PercentageHistory
 {
     /**
      * @inheritdoc
@@ -19,7 +19,7 @@ class ContractPriceHistorySearch extends ContractPriceHistory
     {
         return [
             [['id', 'contract_additions_id', 'created_at', 'updated_at'], 'integer'],
-            [['date'], 'safe'],
+            [['start_date', 'use_purpose'], 'safe'],
             [['amount'], 'number'],
         ];
     }
@@ -42,7 +42,7 @@ class ContractPriceHistorySearch extends ContractPriceHistory
      */
     public function search($params)
     {
-        $query = ContractPriceHistory::find();
+        $query = PercentageHistory::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,12 +58,14 @@ class ContractPriceHistorySearch extends ContractPriceHistory
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'date' => $this->date,
+            'start_date' => $this->start_date,
             'amount' => $this->amount,
             'contract_additions_id' => $this->contract_additions_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
+
+        $query->andFilterWhere(['like', 'use_purpose', $this->use_purpose]);
 
         return $dataProvider;
     }

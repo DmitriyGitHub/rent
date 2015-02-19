@@ -19,9 +19,6 @@ use yii\behaviors\TimestampBehavior;
  */
 class PaymentsType extends \yii\db\ActiveRecord
 {
-    const ID_PAYMENT_RENT = 1;
-    const ID_PAYMENT_MUTUAL = 2;
-    
     /**
      * @inheritdoc
      */
@@ -67,14 +64,12 @@ class PaymentsType extends \yii\db\ActiveRecord
     
     public static function getNonRemovable(){
         return [
-            self::ID_PAYMENT_MUTUAL,
-            self::ID_PAYMENT_RENT,
         ];
     }
     
     public function beforeDelete() {
         if(parent::beforeDelete()){
-            if(in_array($this->id, $this->nonRemovable)){
+            if(in_array($this->id, $this->nonRemovable) || count($this->payments)){
                 return FALSE;
             }
             return TRUE;

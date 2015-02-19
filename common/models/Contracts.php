@@ -29,7 +29,10 @@ use yii\behaviors\TimestampBehavior;
  * @property ContractsType $type
  * @property Objects $object
  * @property Organisations $organisation
+ * @property ExpertAssessmentHistory[] $expertAssessmentHistories
  * @property Payments[] $payments
+ * @property PercentageHistory[] $percentageHistories
+ * @property ContractAdditions[] $contractAdditions
  */
 class Contracts extends \yii\db\ActiveRecord
 {
@@ -122,9 +125,33 @@ class Contracts extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getExpertAssessmentHistories()
+    {
+        return $this->hasMany(ExpertAssessmentHistory::className(), ['contract_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getPayments()
     {
         return $this->hasMany(Payments::className(), ['contract_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPercentageHistories()
+    {
+        return $this->hasMany(PercentageHistory::className(), ['contract_id' => 'id'])->via('contractAdditions');
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getContractAdditions()
+    {
+        return $this->hasMany(ContractAdditions::className(), ['contract_id' => 'id']);
     }
     
     /**
@@ -141,7 +168,7 @@ class Contracts extends \yii\db\ActiveRecord
         $latestPayment = $this->getPayments()->orderBy(['date' => SORT_DESC])->one();
         if($latestPayment){
             return $latestPayment->amount;
-        }
+}
         return '';
     }
     

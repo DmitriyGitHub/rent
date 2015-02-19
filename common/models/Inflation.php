@@ -60,4 +60,12 @@ class Inflation extends \yii\db\ActiveRecord
             TimestampBehavior::className(),
         ];
     }
+    
+    public static function getSumInflation($startDate){
+        $inflations = Inflation::find()->andWhere(['>', 'date', $startDate])->andWhere(['<', 'date', date('Y-m-d')])->all();
+        $sum = 0;
+        foreach($inflations as $inflation){
+            //calculate inflation
+        }
+    }
 }

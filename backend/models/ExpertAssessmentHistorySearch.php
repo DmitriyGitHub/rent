@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\ContractPriceHistory;
+use common\models\ExpertAssessmentHistory;
 
 /**
- * ContractPriceHistorySearch represents the model behind the search form about `common\models\ContractPriceHistory`.
+ * ExpertAssessmentHistorySearch represents the model behind the search form about `common\models\ExpertAssessmentHistory`.
  */
-class ContractPriceHistorySearch extends ContractPriceHistory
+class ExpertAssessmentHistorySearch extends ExpertAssessmentHistory
 {
     /**
      * @inheritdoc
@@ -20,7 +20,7 @@ class ContractPriceHistorySearch extends ContractPriceHistory
         return [
             [['id', 'contract_additions_id', 'created_at', 'updated_at'], 'integer'],
             [['date'], 'safe'],
-            [['amount'], 'number'],
+            [['amount', 'square'], 'number'],
         ];
     }
 
@@ -42,7 +42,7 @@ class ContractPriceHistorySearch extends ContractPriceHistory
      */
     public function search($params)
     {
-        $query = ContractPriceHistory::find();
+        $query = ExpertAssessmentHistory::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -60,6 +60,7 @@ class ContractPriceHistorySearch extends ContractPriceHistory
             'id' => $this->id,
             'date' => $this->date,
             'amount' => $this->amount,
+            'square' => $this->square,
             'contract_additions_id' => $this->contract_additions_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

@@ -52,7 +52,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{update}',
+                'template' => '{update} {additions}',
+                'buttons' => [
+                    'additions' => function ($url, $model, $key) {
+                        $url = ['/contract-additions/index', 'ContractAdditionsSearch' => ['contract_number' => $model->number]];
+                        return Html::a('<span class="glyphicon glyphicon-folder-open"></span>', $url, [
+                            'title' => Yii::t('yii', 'Additions'),
+                            'data-pjax' => '0',
+                        ]);
+                    }
+                ],
             ],
         ],
     ]); ?>

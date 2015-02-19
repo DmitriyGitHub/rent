@@ -20,6 +20,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class ServicesType extends \yii\db\ActiveRecord
 {
+    const ID_SERVICE_RENT = 1;
+    const ID_SERVICE_MUTUAL = 2;
     /**
      * @inheritdoc
      */
@@ -69,6 +71,23 @@ class ServicesType extends \yii\db\ActiveRecord
     public function getPayments()
     {
         return $this->hasMany(Payments::className(), ['service_id' => 'id']);
+    }
+    
+    public static function getNonRemovable(){
+        return [
+            self::ID_SERVICE_MUTUAL,
+            self::ID_SERVICE_RENT,
+        ];
+    }
+    
+    public function beforeDelete() {
+        if(parent::beforeDelete()){
+            if(in_array($this->id, $this->nonRemovable) || count($this->payments) || count($this->accruals)){
+                return FALSE;
+            }
+            return TRUE;
+        }
+        return FALSE;
     }
     
     /**
