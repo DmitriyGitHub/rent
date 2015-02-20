@@ -33,7 +33,7 @@ class ContractPriceHistory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date'], 'safe'],
+            [['start_date'], 'safe'],
             [['amount', 'contract_additions_id'], 'required'],
             [['amount'], 'number'],
             [['contract_additions_id', 'created_at', 'updated_at'], 'integer']
@@ -47,7 +47,7 @@ class ContractPriceHistory extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'date' => Yii::t('app', 'Date'),
+            'start_date' => Yii::t('app', 'Date'),
             'amount' => Yii::t('app', 'Amount'),
             'contract_additions_id' => Yii::t('app', 'Contract Additions ID'),
             'created_at' => Yii::t('app', 'Created At'),

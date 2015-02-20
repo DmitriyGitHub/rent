@@ -45,9 +45,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'type_name',
                 'value' => 'type.name',
             ],
-            'square',
+            'expertAssessmentSquare',
             'descriptions',
-            'initial_price',
+            'expertAssessmentAmount',
             'account_number',
 
             [

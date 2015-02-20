@@ -33,9 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     return GridView::ROW_COLLAPSED;
                 },
                 'detailUrl' => 'site/contract-data',
-                'allowBatchToggle' => FALSE,
+                'allowBatchToggle' => TRUE,
             ],
-
             [
                 'attribute' => 'organisation_name',
                 'value' => 'organisation.name',
@@ -47,12 +46,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'object_address',
                 'value' => 'object.fullAddress',
             ],
+            'latestAccrual',
+            'latestPayment',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update}',
             ],
-            'latestAccrual',
-            'latestPayment',
         ],
         'toolbar'=>[
             '{export}',

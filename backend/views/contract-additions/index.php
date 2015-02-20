@@ -35,7 +35,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'number',
             'description',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {prices}',
+                'buttons' => [
+                    'prices' => function ($url, $model, $key) {
+                        $url = ['/contract-price-history/index', 'ContractPriceHistorySearch' => ['contract_addition_id' => $model->id]];
+                        return Html::a('<span class="glyphicon glyphicon-folder-open"></span>', $url, [
+                            'title' => Yii::t('yii', 'Prices'),
+                            'data-pjax' => '0',
+                        ]);
+                    }
+                ],
+            ],
         ],
     ]); ?>
 

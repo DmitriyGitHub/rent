@@ -71,25 +71,25 @@ class ContractAdditions extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getContractPriceHistories()
+    public function getContractPriceHistory()
     {
-        return $this->hasMany(ContractPriceHistory::className(), ['contract_additions_id' => 'id']);
+        return $this->hasOne(ContractPriceHistory::className(), ['contract_additions_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getExpertAssessmentHistories()
+    public function getExpertAssessmentHistory()
     {
-        return $this->hasMany(ExpertAssessmentHistory::className(), ['contract_additions_id' => 'id']);
+        return $this->hasOne(ExpertAssessmentHistory::className(), ['contract_additions_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPercentageHistories()
+    public function getPercentageHistory()
     {
-        return $this->hasMany(PercentageHistory::className(), ['contract_additions_id' => 'id']);
+        return $this->hasOne(PercentageHistory::className(), ['contract_additions_id' => 'id']);
     }
     
     /**

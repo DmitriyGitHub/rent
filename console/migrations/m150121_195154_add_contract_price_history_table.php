@@ -15,7 +15,7 @@ class m150121_195154_add_contract_price_history_table extends Migration
 
     $this->createTable('{{%contract_price_history}}', [
         'id' => Schema::TYPE_PK,
-        'date' => Schema::TYPE_DATE,
+        'start_date' => Schema::TYPE_DATE,
         'amount' => Schema::TYPE_DECIMAL . '(15,2) NOT NULL',
         'contract_additions_id' => Schema::TYPE_INTEGER . ' NOT NULL',
         
@@ -27,7 +27,6 @@ class m150121_195154_add_contract_price_history_table extends Migration
 
     public function down()
     {
-        $this->dropForeignKey('FK_contract_price_history_contract', 'contract_price_history');
         $this->dropTable('{{%contract_price_history}}');
     }
 }

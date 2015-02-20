@@ -34,8 +34,8 @@ class ExpertAssessmentHistory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date', 'contract_additions_id'], 'required'],
-            [['date'], 'safe'],
+            [['start_date', 'contract_additions_id'], 'required'],
+            [['start_date'], 'safe'],
             [['amount', 'square'], 'number'],
             [['contract_additions_id', 'created_at', 'updated_at'], 'integer']
         ];
@@ -48,7 +48,7 @@ class ExpertAssessmentHistory extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'date' => Yii::t('app', 'Date'),
+            'start_date' => Yii::t('app', 'Date'),
             'amount' => Yii::t('app', 'Amount'),
             'square' => Yii::t('app', 'Square'),
             'contract_additions_id' => Yii::t('app', 'Contract Additions ID'),

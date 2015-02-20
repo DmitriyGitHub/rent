@@ -15,7 +15,7 @@ class m150218_185208_add_expert_assessment_table extends Migration
 
         $this->createTable('{{%expert_assessment_history}}', [
             'id' => Schema::TYPE_PK,
-            'date' => Schema::TYPE_DATE . ' NOT NULL',
+            'start_date' => Schema::TYPE_DATE . ' NOT NULL',
             'amount' => Schema::TYPE_DECIMAL . '(15,2)',
             'square' => Schema::TYPE_DECIMAL . '(15,2)',
             'contract_additions_id' => Schema::TYPE_INTEGER . ' NOT NULL',

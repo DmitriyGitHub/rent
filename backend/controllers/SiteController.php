@@ -112,7 +112,21 @@ class SiteController extends Controller
                     'query' => $query,
                 ]);
                 
-                return $this->renderPartial('_contract-details', ['model'=>$model, 'accruals' => $accruals, 'payments' => $payments]);
+                $query = $model->getContractAdditions();
+
+                $contractAdditions = new ActiveDataProvider([
+                    'query' => $query,
+                ]);
+                
+                return $this->renderPartial(
+                    '_contract-details', 
+                    [
+                        'model'=>$model, 
+                        'accruals' => $accruals, 
+                        'payments' => $payments,
+                        'contractAdditions' => $contractAdditions,
+                    ]
+                );
             }
         }
             

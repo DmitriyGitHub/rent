@@ -36,6 +36,12 @@ use yii\behaviors\TimestampBehavior;
  */
 class Contracts extends \yii\db\ActiveRecord
 {
+    
+    public $expertAssessmentSquare;
+    public $expertAssessmentAmount;
+    public $price;
+    public $percentage;
+    public $usePurpose;
     /**
      * @inheritdoc
      */
@@ -53,8 +59,8 @@ class Contracts extends \yii\db\ActiveRecord
             [['number'], 'required'],
             [['date', 'start_date', 'end_date'], 'safe'],
             [['object_id', 'organisation_id', 'status', 'type_id', 'created_at', 'updated_at'], 'integer'],
-            [['square', 'price', 'expert_assessment', 'percentage'], 'number'],
-            [['number', 'descriptions', 'account_number', 'use_purpose'], 'string', 'max' => 255]
+            [['expertAssessmentSquare', 'price', '$expertAssessmentAmount', 'percentage'], 'number'],
+            [['number', 'descriptions', 'account_number', 'usePurpose'], 'string', 'max' => 255]
         ];
     }
 
@@ -178,5 +184,62 @@ class Contracts extends \yii\db\ActiveRecord
             return $latestAccrual->amount;
         }
         return '';
+    }
+    
+    private function getCurrentExpertAssessmentHistoryItem(){
+        $expertAssessmentHistoryItem = $this->getExpertAssessmentHistories()
+                ->andWhere(['<=', 'start_date', date('Y-m-d')])
+                ->orderBy(['start_date' => SORT_DESC])
+                ->one();
+        if(!$expertAssessmentHistoryItem){
+            //TODO: No square found. Throw an error probably.
+            return new ExpertAssessmentHistory();
+        }
+        return $expertAssessmentHistoryItem;
+    }
+    
+    public function getExpertAssessmentSquare(){
+        return $this->currentExpertAssessmentHistoryItem->square;
+    }
+    
+    public function getExpertAssessmentAmount(){
+        return $this->currentExpertAssessmentHistoryItem->amount;
+    }
+
+    
+    private function getPercentageHistoryItem(){
+        $percentageHistoryItem = $this->getPercentageHistories()
+                ->andWhere(['<=', 'start_date', date('Y-m-d')])
+                ->orderBy(['start_date' => SORT_DESC])
+                ->one();
+        if(!$percentageHistoryItem){
+            //TODO: No square found. Throw an error probably.
+            return new PercentageHistory();
+        }
+        return $percentageHistoryItem;
+    }
+    
+    public function getPercentage(){
+        return $this->currentPercentageHistoryItem->amount;
+    }
+    
+    public function getUsePurpose(){
+        return $this->currentPercentageHistoryItem->use_purpose;
+    }
+    
+    private function getPriceHistoryItem(){
+        $percentageHistoryItem = $this->getPercentageHistories()
+                ->andWhere(['<=', 'start_date', date('Y-m-d')])
+                ->orderBy(['start_date' => SORT_DESC])
+                ->one();
+        if(!$percentageHistoryItem){
+            //TODO: No square found. Throw an error probably.
+            return new PercentageHistory();
+        }
+        return $percentageHistoryItem;
+    }
+    
+    public function getPrice(){
+        return $this->priceHistoryItem->amount;
     }
 }

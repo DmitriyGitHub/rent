@@ -32,10 +32,10 @@ class m150219_194311_add_contract_addition_table extends Migration
 
     public function down()
     {
-        $this->dropForeignKey('FK_contract_additions_contract', 'percentage_history');
+        $this->dropForeignKey('FK_contract_additions_contract', 'contract_additions');
         $this->dropForeignKey('FK_percentage_history_addition', 'percentage_history');
-        $this->dropForeignKey('FK_expert_assessment_history_addition', 'percentage_history');
-        $this->dropForeignKey('FK_contract_price_history_addition', 'percentage_history');
+        $this->dropForeignKey('FK_expert_assessment_history_addition', 'expert_assessment_history');
+        $this->dropForeignKey('FK_contract_price_history_addition', 'contract_price_history');
         $this->dropTable('{{%contract_additions}}');
     }
 }
