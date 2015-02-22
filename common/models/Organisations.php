@@ -13,10 +13,6 @@ use yii\behaviors\TimestampBehavior;
  * @property string $okpo
  * @property string $legal_address
  * @property string $real_address
- * @property integer $budget_org
- * @property integer $general_org
- * @property integer $vat_payer
- * @property integer $self_org
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at

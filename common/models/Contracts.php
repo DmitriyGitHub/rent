@@ -37,11 +37,11 @@ use yii\behaviors\TimestampBehavior;
 class Contracts extends \yii\db\ActiveRecord
 {
     
-    public $expertAssessmentSquare;
-    public $expertAssessmentAmount;
-    public $price;
-    public $percentage;
-    public $usePurpose;
+    private $expertAssessmentSquare;
+    private $expertAssessmentAmount;
+    private $price;
+    private $percentage;
+    private $usePurpose;
     /**
      * @inheritdoc
      */
@@ -59,8 +59,9 @@ class Contracts extends \yii\db\ActiveRecord
             [['number'], 'required'],
             [['date', 'start_date', 'end_date'], 'safe'],
             [['object_id', 'organisation_id', 'status', 'type_id', 'created_at', 'updated_at'], 'integer'],
-            [['expertAssessmentSquare', 'price', '$expertAssessmentAmount', 'percentage'], 'number'],
-            [['number', 'descriptions', 'account_number', 'usePurpose'], 'string', 'max' => 255]
+            [['expertAssessmentSquare', 'price', 'expertAssessmentAmount', 'percentage'], 'number'],
+            [['number', 'descriptions', 'account_number', 'usePurpose'], 'string', 'max' => 255],
+            [['expertAssessmentSquare', 'price', 'expertAssessmentAmount', 'percentage', 'usePurpose'], 'required', 'on' => 'insert']
         ];
     }
 
@@ -101,7 +102,7 @@ class Contracts extends \yii\db\ActiveRecord
      */
     public function getContractPriceHistories()
     {
-        return $this->hasMany(ContractPriceHistory::className(), ['contract_id' => 'id'])->via('contractAdditions');
+        return $this->hasMany(ContractPriceHistory::className(), ['contract_additions_id' => 'id'])->via('contractAdditions');
     }
 
     /**
@@ -133,7 +134,7 @@ class Contracts extends \yii\db\ActiveRecord
      */
     public function getExpertAssessmentHistories()
     {
-        return $this->hasMany(ExpertAssessmentHistory::className(), ['contract_id' => 'id'])->via('contractAdditions');
+        return $this->hasMany(ExpertAssessmentHistory::className(), ['contract_additions_id' => 'id'])->via('contractAdditions');
     }
 
     /**
@@ -149,7 +150,7 @@ class Contracts extends \yii\db\ActiveRecord
      */
     public function getPercentageHistories()
     {
-        return $this->hasMany(PercentageHistory::className(), ['contract_id' => 'id'])->via('contractAdditions');
+        return $this->hasMany(PercentageHistory::className(), ['contract_additions_id' => 'id'])->via('contractAdditions');
     }
     
     /**
@@ -199,15 +200,21 @@ class Contracts extends \yii\db\ActiveRecord
     }
     
     public function getExpertAssessmentSquare(){
-        return $this->currentExpertAssessmentHistoryItem->square;
+        if(!empty($this->expertAssessmentSquare)){
+            return $this->expertAssessmentSquare;
+        }
+        return $this->getCurrentExpertAssessmentHistoryItem()->square;
     }
     
     public function getExpertAssessmentAmount(){
-        return $this->currentExpertAssessmentHistoryItem->amount;
+        if(!empty($this->expertAssessmentAmount)){
+            return $this->expertAssessmentAmount;
+        }
+        return $this->getCurrentExpertAssessmentHistoryItem()->amount;
     }
 
     
-    private function getPercentageHistoryItem(){
+    private function getCurrentPercentageHistoryItem(){
         $percentageHistoryItem = $this->getPercentageHistories()
                 ->andWhere(['<=', 'start_date', date('Y-m-d')])
                 ->orderBy(['start_date' => SORT_DESC])
@@ -220,15 +227,21 @@ class Contracts extends \yii\db\ActiveRecord
     }
     
     public function getPercentage(){
-        return $this->currentPercentageHistoryItem->amount;
+        if(!empty($this->percentage)){
+            return $this->percentage;
+        }
+        return $this->getCurrentPercentageHistoryItem()->amount;
     }
     
     public function getUsePurpose(){
-        return $this->currentPercentageHistoryItem->use_purpose;
+        if(!empty($this->usePurpose)){
+            return $this->usePurpose;
+        }
+        return $this->getCurrentPercentageHistoryItem()->use_purpose;
     }
     
-    private function getPriceHistoryItem(){
-        $percentageHistoryItem = $this->getPercentageHistories()
+    private function getCurrentPriceHistoryItem(){
+        $percentageHistoryItem = $this->getContractPriceHistories()
                 ->andWhere(['<=', 'start_date', date('Y-m-d')])
                 ->orderBy(['start_date' => SORT_DESC])
                 ->one();
@@ -240,6 +253,57 @@ class Contracts extends \yii\db\ActiveRecord
     }
     
     public function getPrice(){
-        return $this->priceHistoryItem->amount;
+        if(!empty($this->price)){
+            return $this->price;
+        }
+        return $this->getCurrentPriceHistoryItem()->amount;
+    }
+    
+    public function setExpertAssessmentSquare($square){
+        $this->expertAssessmentSquare = $square;
+    }
+    
+    public function setExpertAssessmentAmount($amount){
+        $this->expertAssessmentAmount = $amount;
+    }
+    
+    public function setPercentage($amount){
+        return $this->percentage = $amount;
+    }
+    
+    public function setUsePurpose($use_purpose){
+        return $this->usePurpose = $use_purpose;
+    }
+    
+    public function setPrice($price){
+        return $this->price = $price;
+    }
+    
+    public function afterSave($insert, $changedAttributes) {
+        parent::afterSave($insert, $changedAttributes);
+        if($insert){
+            $contractAddition = new ContractAdditions();
+            $contractAddition->contract_id = $this->id;
+            $contractAddition->number = $this->number;
+            $contractAddition->date = $this->date;
+            $contractAddition->save();
+            
+            $items['expertAssessment'] = new ExpertAssessmentHistory();
+            $items['expertAssessment']->amount = $this->expertAssessmentAmount;
+            $items['expertAssessment']->square = $this->expertAssessmentSquare;
+            
+            $items['price'] = new ContractPriceHistory();
+            $items['price']->amount = $this->price;
+            
+            $items['percentage'] = new PercentageHistory();
+            $items['percentage']->amount = $this->percentage;
+            $items['percentage']->use_purpose = $this->usePurpose;
+            
+            foreach($items as $item){
+                $item->contract_additions_id = $contractAddition->id;
+                $item->start_date = $this->start_date;
+                $item->save();
+            }            
+        }
     }
 }

@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model, $key, $index, $column) {
                     return GridView::ROW_COLLAPSED;
                 },
-                'detailUrl' => 'site/contract-data',
+                'detailUrl' => 'contract-data',
                 'allowBatchToggle' => TRUE,
             ],
             [

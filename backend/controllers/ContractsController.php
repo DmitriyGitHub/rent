@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\data\ActiveDataProvider;
 
 /**
  * ContractsController implements the CRUD actions for Contracts model.
@@ -74,7 +75,7 @@ class ContractsController extends Controller
     public function actionCreate()
     {
         $model = new Contracts();
-
+        $model->scenario = 'insert';
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -97,8 +98,14 @@ class ContractsController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $query = $model->getContractAdditions();
+
+            $contractAdditions = new ActiveDataProvider([
+                'query' => $query,
+            ]);
             return $this->render('update', [
                 'model' => $model,
+                'contractAdditions' => $contractAdditions,
             ]);
         }
     }

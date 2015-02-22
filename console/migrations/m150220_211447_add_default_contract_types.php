@@ -17,14 +17,14 @@ class m150220_211447_add_default_contract_types extends Migration
         
         $self = new ContractsType();
         $self->id = 2;
-        $self->name = Yii::t('app', 'Self');
+        $self->name = Yii::t('app', 'Self needs');
         $self->code = $self->name[0];
         $self->description = $self->name;
         $self->save();
         
         $budget = new ContractsType();
         $budget->id = 3;
-        $budget->name = Yii::t('app', 'Budget');
+        $budget->name = Yii::t('app', 'Budget contract');
         $budget->code = $budget->name[0];
         $budget->description = $budget->name;
         $budget->save();

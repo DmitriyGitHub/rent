@@ -23,8 +23,8 @@ class DefaultSearch extends Contracts
     {
         return [
             [['id', 'object_id', 'organisation_id', 'status', 'type_id', 'created_at', 'updated_at'], 'integer'],
-            [['type_name', 'organisation_name', 'object_address', 'number', 'date', 'start_date', 'end_date', 'descriptions', 'account_number'], 'safe'],
-            [['square', 'initial_price'], 'number'],
+            [['usePurpose', 'type_name', 'organisation_name', 'object_address', 'number', 'date', 'start_date', 'end_date', 'descriptions', 'account_number'], 'safe'],
+            [['expertAssessmentSquare', 'expertAssessmentAmount', 'price', 'percentage'], 'number'],
         ];
     }
 
@@ -84,8 +84,8 @@ class DefaultSearch extends Contracts
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'status' => $this->status,
-            'square' => $this->square,
-            'initial_price' => $this->initial_price,
+//            'square' => $this->square,
+//            'initial_price' => $this->initial_price,
         ]);
         
         $query->joinWith('type');

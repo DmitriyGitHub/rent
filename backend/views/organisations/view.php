@@ -32,10 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'okpo',
             'legal_address',
             'real_address',
-            'budget_org',
-            'general_org',
-            'vat_payer',
-            'self_org',
         ],
     ]) ?>
 

@@ -18,7 +18,7 @@ class OrganisationsSearch extends Organisations
     public function rules()
     {
         return [
-            [['id', 'budget_org', 'general_org', 'vat_payer', 'self_org', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['name', 'okpo', 'legal_address', 'real_address'], 'safe'],
         ];
     }
@@ -57,10 +57,6 @@ class OrganisationsSearch extends Organisations
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'budget_org' => $this->budget_org,
-            'general_org' => $this->general_org,
-            'vat_payer' => $this->vat_payer,
-            'self_org' => $this->self_org,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
