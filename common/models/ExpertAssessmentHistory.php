@@ -49,7 +49,7 @@ class ExpertAssessmentHistory extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'start_date' => Yii::t('app', 'Date'),
-            'amount' => Yii::t('app', 'Amount'),
+            'amount' => Yii::t('app', 'Expert assessment'),
             'square' => Yii::t('app', 'Square'),
             'contract_additions_id' => Yii::t('app', 'Contract Additions ID'),
             'created_at' => Yii::t('app', 'Created At'),

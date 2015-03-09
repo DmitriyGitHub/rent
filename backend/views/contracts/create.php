@@ -14,7 +14,7 @@ use kartik\widgets\DatePicker;
 /* @var $model common\models\Contracts */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Contracts',
+    'modelClass' => Yii::t('app', 'Contract'),
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Contracts'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;

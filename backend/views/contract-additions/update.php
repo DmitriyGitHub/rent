@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model common\models\ContractAdditions */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Contract Additions',
+    'modelClass' => Yii::t('app', 'Contract addition'),
 ]) . ' ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Contract Additions'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];

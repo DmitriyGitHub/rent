@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Contracts',
+    'modelClass' => Yii::t('app', 'Contract'),
 ]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
@@ -36,14 +36,17 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'object_address',
                 'value' => 'object.fullAddress',
+                'label' => Yii::t('app', 'Address'),
             ],
             [
                 'attribute' => 'organisation_name',
                 'value' => 'organisation.name',
+                'label' => Yii::t('app', 'Organisation'),
             ],
             [
                 'attribute' => 'type_name',
                 'value' => 'type.name',
+                'label' => Yii::t('app', 'Type'),
             ],
             'expertAssessmentSquare',
             'descriptions',
@@ -57,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'additions' => function ($url, $model, $key) {
                         $url = ['/contract-additions/index', 'ContractAdditionsSearch' => ['contract_number' => $model->number]];
                         return Html::a('<span class="glyphicon glyphicon-folder-open"></span>', $url, [
-                            'title' => Yii::t('yii', 'Additions'),
+                            'title' => Yii::t('app', 'Additions'),
                             'data-pjax' => '0',
                         ]);
                     }

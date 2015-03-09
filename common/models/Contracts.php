@@ -86,6 +86,13 @@ class Contracts extends \yii\db\ActiveRecord
             'account_number' => Yii::t('app', 'Account Number'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
+            'expertAssessmentSquare' => Yii::t('app', 'Square'),
+            'expertAssessmentAmount' => Yii::t('app', 'Expert assessment'),
+            'price' => Yii::t('app', 'Price'),
+            'percentage' => Yii::t('app', 'Percentage'),
+            'usePurpose' => Yii::t('app', 'Use purpose'),
+            'latestAccrual' => Yii::t('app', 'Latest accrual'),
+            'latestPayment' => Yii::t('app', 'Latest payment'),
         ];
     }
 

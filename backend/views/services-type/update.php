@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model common\models\ServicesType */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Services Type',
+    'modelClass' => Yii::t('app', 'Service Type'),
 ]) . ' ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Services Types'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name];

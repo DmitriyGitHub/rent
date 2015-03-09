@@ -15,13 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="contracts-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Contracts',
-]), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -38,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'organisation_name',
                 'value' => 'organisation.name',
+                'label' => Yii::t('app', 'Organisation'),
             ],
             [
                 'attribute' => 'number',
@@ -45,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'object_address',
                 'value' => 'object.fullAddress',
+                'label' => Yii::t('app', 'Address'),
             ],
             'latestAccrual',
             'latestPayment',

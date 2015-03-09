@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Payments */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Payments',
+    'modelClass' => Yii::t('app', 'Payment'),
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Payments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;

@@ -48,7 +48,7 @@ class ContractPriceHistory extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'start_date' => Yii::t('app', 'Date'),
-            'amount' => Yii::t('app', 'Amount'),
+            'amount' => Yii::t('app', 'Price'),
             'contract_additions_id' => Yii::t('app', 'Contract Additions ID'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
@@ -58,7 +58,7 @@ class ContractPriceHistory extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getContractAdditions()
+    public function getContractAddition()
     {
         return $this->hasOne(ContractAdditions::className(), ['id' => 'contract_additions_id']);
     }

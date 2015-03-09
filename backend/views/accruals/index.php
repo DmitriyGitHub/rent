@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Accruals',
+    'modelClass' => Yii::t('app', 'Accrual'),
 ]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'contract_number',
                 'value' => 'contract.number',
+                'label' => Yii::t('app', 'Contract number'),
             ],
             [
                 'attribute' => 'service_id',

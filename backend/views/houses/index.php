@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Houses',
+    'modelClass' => Yii::t('app', 'House'),
 ]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model){
                     return $model->street->streetType->short_name . ' ' . $model->street->name;
                 },
+                'label' => Yii::t('app', 'Street name'),
             ],
             'number',
             'letter',

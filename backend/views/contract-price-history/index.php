@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Contract Price History',
+    'modelClass' => Yii::t('app', 'Contract Price History'),
 ]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'start_date',
             'amount',
-            'contract_additions_id',
+            'contractAddition.number',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

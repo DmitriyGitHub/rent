@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model common\models\StreetsTypes */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Streets Types',
+    'modelClass' => Yii::t('app', 'Street Type'),
 ]) . ' ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Streets Types'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id];

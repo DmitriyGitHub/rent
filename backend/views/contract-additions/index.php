@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Contract Additions',
+    'modelClass' => Yii::t('app', 'Contract addition'),
 ]), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'contract_number',
                 'value' => 'contract.number',
+                'label' => Yii::t('app', 'Contract number'),
             ],
             'number',
             'description',
@@ -42,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'prices' => function ($url, $model, $key) {
                         $url = ['/contract-price-history/index', 'ContractPriceHistorySearch' => ['contract_addition_id' => $model->id]];
                         return Html::a('<span class="glyphicon glyphicon-folder-open"></span>', $url, [
-                            'title' => Yii::t('yii', 'Prices'),
+                            'title' => Yii::t('app', 'Prices'),
                             'data-pjax' => '0',
                         ]);
                     }

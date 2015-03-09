@@ -19,7 +19,7 @@ class ContractPriceHistorySearch extends ContractPriceHistory
     {
         return [
             [['id', 'contract_additions_id', 'created_at', 'updated_at'], 'integer'],
-            [['date'], 'safe'],
+            [['start_date'], 'safe'],
             [['amount'], 'number'],
         ];
     }
@@ -58,7 +58,7 @@ class ContractPriceHistorySearch extends ContractPriceHistory
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'date' => $this->date,
+            'start_date' => $this->start_date,
             'amount' => $this->amount,
             'contract_additions_id' => $this->contract_additions_id,
             'created_at' => $this->created_at,

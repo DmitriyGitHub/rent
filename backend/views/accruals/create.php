@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model common\models\Accruals */
 
 $this->title = Yii::t('app', 'Create {modelClass}', [
-    'modelClass' => 'Accruals',
+    'modelClass' => Yii::t('app', 'Accrual'),
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Accruals'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;

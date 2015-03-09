@@ -50,7 +50,7 @@ class PercentageHistory extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'start_date' => Yii::t('app', 'Start Date'),
-            'amount' => Yii::t('app', 'Amount'),
+            'amount' => Yii::t('app', 'Percentage'),
             'use_purpose' => Yii::t('app', 'Use Purpose'),
             'contract_additions_id' => Yii::t('app', 'Contract Additions ID'),
             'created_at' => Yii::t('app', 'Created At'),
